@@ -32,10 +32,55 @@ const _ = {
     var paddedString = " ".repeat(startPaddingLength) + `${str}` + " ".repeat(endPaddingLength);
     return paddedString;
   },
-  has
-}
+  has(obj, key) {
+    var hasValue = obj[key] !== undefined
+      return hasValue;
+  },
 
+  invert(object) {
+    let invertedObject = {};
+    for (let key in object){
+      invertedObject[object[key]] = key;
+    } return invertedObject
+  },
 
+  findKey(object, predicate){
+    for(let key in object) {
+      let value = object[key];
+      let predicateReturnValue = predicate(value);
+      if (predicateReturnValue) {
+        return key;
+      };
+    };
+    return undefined;
+  },
 
-// Do not write or modify code below this line.
+  drop(array, n) {
+    let droppedArray = array.slice(n);
+    if(n) {
+      n = 1;
+    };
+    return droppedArray;
+  },
+
+  dropWhile(array, predicate) {
+    const callBack = (element, index) => {
+      return !predicate(element, index, array);
+    }; 
+    let dropNumber = array.findIndex(callBack);
+    let droppedArray = this.drop(array, dropNumber);
+    return droppedArray;
+  },
+
+  chunk(array, size=1) {
+    let arrayChunks = [];
+    for(let i = 0;i < array.length; i += size) {
+      let arrayChunk = array.slice(i, i + size);
+      arrayChunks.push(arrayChunk);
+    }
+      return arrayChunks;
+  }
+
+};
+
 module.exports = _;
