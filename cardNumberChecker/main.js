@@ -24,3 +24,54 @@ const batch = [valid1, valid2, valid3, valid4, valid5, invalid1, invalid2, inval
 
 
 // Add your functions below:
+let doubledDigit = [];
+let invalidCards = [];
+let creditCardCompanies = [];
+function validateCred(array){
+  for(let i = array.length - 1;i >= 0; i--){
+    if(i % 2 === 0) {
+      let num = array[i] * 2;
+        if(num > 9){
+          let newNum = num - 9;
+          doubledDigit.push(newNum);
+        } else{
+          doubledDigit.push(num);
+        };
+    } else{
+      doubledDigit.push(array[i]);
+    }
+  }
+  let totalDoubledDigit = doubledDigit.reduce((a, b)=>{
+    return a + b;
+  }, 0);
+  if(totalDoubledDigit % 10 === 0){
+    return true;
+  } else{
+    return false;
+};
+};
+function findInvalidCards(nestedArray){
+  for (let i = 0;i < nestedArray.length; i++){
+    if (validateCred(nestedArray[i]) === false){
+      invalidCards.push(nestedArray[i]);
+    };
+  }
+  return invalidCards;
+};
+
+function idInvalidCardCompanies(invalidNumbersArray){
+  for (let i = 0;i < invalidNumbersArray.length; i++){
+    if (invalidNumbersArray[i][0] === 3 && creditCardCompanies.indexOf("American Express") === -1){
+      creditCardCompanies.push("American Express");
+    } else if (invalidNumbersArray[i][0] === 4 && creditCardCompanies.indexOf("Visa") === -1){
+      creditCardCompanies.push("Visa");
+    } else if (invalidNumbersArray[i][0] === 5 && creditCardCompanies.indexOf("Mastercard") === -1){
+      creditCardCompanies.push("Mastercard");
+    } else if (invalidNumbersArray[i][0] === 6 && creditCardCompanies.indexOf("Discover") === -1){
+      creditCardCompanies.push("Discover");
+    } else {
+      console.log('Company not found.');
+    }
+  }
+  return creditCardCompanies;
+};
